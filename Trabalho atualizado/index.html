@@ -1,0 +1,1661 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fluxo Real - Sua Revolução Financeira</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-bg: #121212;
+            --secondary-bg: #1E1E1E;
+            --accent-gold: #D4AF37;
+            --accent-gold-light: #F5E6A6;
+            --text-primary: #FFFFFF;
+            --text-secondary: #CCCCCC;
+            --danger: #FF3860;
+            --success: #2ECC71;
+            --warning: #FF851B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .app-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: var(--secondary-bg);
+            min-height: 100vh;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.1);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .app-header {
+            background: linear-gradient(135deg, var(--primary-bg) 0%, #2A2A2A 100%);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--accent-gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--accent-gold);
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 28px;
+        }
+
+        .user-profile {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--accent-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--primary-bg);
+            border: 2px solid var(--accent-gold-light);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 20px;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .saldo-container {
+            background: linear-gradient(135deg, #2A2A2A 0%, #1E1E1E 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid var(--accent-gold);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .saldo-container::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background-color: rgba(212, 175, 55, 0.05);
+            border-radius: 50%;
+            transform: translate(30%, -30%);
+        }
+
+        .saldo-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .saldo-valor {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+        }
+
+        .saldo-detalhes {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .saldo-item {
+            text-align: center;
+        }
+
+        .saldo-item-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 3px;
+        }
+
+        .saldo-item-valor {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .saldo-item-valor.receita {
+            color: var(--success);
+        }
+
+        .saldo-item-valor.despesa {
+            color: var(--danger);
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .feature-card {
+            background-color: var(--primary-bg);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #333;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.1);
+            border-color: var(--accent-gold);
+        }
+
+        .feature-card::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            font-size: 24px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        .feature-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .feature-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Últimas Transações */
+        .transactions-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--accent-gold);
+            display: flex;
+            align-items: center;
+        }
+
+        .transactions-title i {
+            margin-right: 10px;
+        }
+
+        .transactions-list {
+            background-color: var(--primary-bg);
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid #333;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+
+        .transaction-item:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        .transaction-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .transaction-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 16px;
+        }
+
+        .transaction-icon.receita {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: var(--success);
+        }
+
+        .transaction-icon.despesa {
+            background-color: rgba(255, 56, 96, 0.1);
+            color: var(--danger);
+        }
+
+        .transaction-details h4 {
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+
+        .transaction-details p {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .transaction-value {
+            font-weight: 600;
+        }
+
+        .transaction-value.receita {
+            color: var(--success);
+        }
+
+        .transaction-value.despesa {
+            color: var(--danger);
+        }
+
+        /* Navigation */
+        .app-navigation {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--secondary-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            border-top: 1px solid #333;
+            max-width: 500px;
+            margin: 0 auto;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 3px;
+        }
+
+        .nav-item.active {
+            color: var(--accent-gold);
+            transform: translateY(-5px);
+        }
+
+        .nav-item:hover {
+            color: var(--accent-gold);
+        }
+
+        /* Análise de Fluxo */
+        .analise-container {
+            margin-top: 20px;
+            background-color: var(--primary-bg);
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid #333;
+        }
+
+        .analise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .analise-title {
+            font-size: 16px;
+            color: var(--accent-gold);
+        }
+
+        .analise-filter {
+            background-color: var(--secondary-bg);
+            border: 1px solid #333;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        .analise-chart {
+            height: 120px;
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .analise-bar {
+            flex: 1;
+            background: linear-gradient(to top, #222, #444);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            min-height: 2px;
+        }
+
+        .analise-bar.receita {
+            background: linear-gradient(to top, #1B5E20, #4CAF50);
+        }
+
+        .analise-bar.despesa {
+            background: linear-gradient(to top, #B71C1C, #F44336);
+        }
+
+        .analise-label {
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            right: 0;
+            font-size: 10px;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        /* Insights AI */
+        .ai-insight-card {
+            background: linear-gradient(135deg, #301E67 0%, #03001C 100%);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            border: 1px solid var(--accent-gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-insight-card::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        .ai-insight-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .ai-insight-icon {
+            font-size: 20px;
+            color: var(--accent-gold);
+            margin-right: 10px;
+        }
+
+        .ai-insight-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--accent-gold-light);
+        }
+
+        .ai-insight-text {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .ai-insight-suggestion {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 10px;
+            position: relative;
+            z-index: 1;
+            padding-left: 15px;
+            border-left: 2px solid var(--accent-gold);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            background-color: var(--secondary-bg);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            padding: 20px;
+            border: 1px solid var(--accent-gold);
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--accent-gold);
+        }
+
+        .modal-title {
+            font-size: 20px;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Configurações */
+        .settings-item {
+            background-color: var(--primary-bg);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #333;
+        }
+
+        .settings-item-title {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .settings-item-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #333;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--accent-gold);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Relatórios */
+        .report-card {
+            background-color: var(--primary-bg);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #333;
+        }
+
+        .report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .report-title {
+            font-size: 16px;
+            color: var(--accent-gold);
+        }
+
+        .report-period {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .report-summary {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .report-summary-item {
+            text-align: center;
+        }
+
+        .report-summary-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .report-summary-value {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Metas */
+        .goal-card {
+            background-color: var(--primary-bg);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #333;
+        }
+
+        .goal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .goal-title {
+            font-size: 16px;
+            color: var(--accent-gold);
+        }
+
+                        .progress-bar {
+                height: 5px;
+                width: 100%;
+                background-color: #333;
+                border-radius: 3px;
+                margin: 10px 0;
+                overflow: hidden;
+            }
+
+            .progress-fill {
+                height: 100%;
+                background-color: var(--accent-gold);
+                border-radius: 3px;
+            }
+
+            /* Formulários */
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            .form-label {
+                display: block;
+                margin-bottom: 5px;
+                font-size: 14px;
+            }
+
+            .form-input {
+                width: 100%;
+                padding: 10px;
+                background-color: #333;
+                border: 1px solid #444;
+                border-radius: 5px;
+                color: var(--text-primary);
+            }
+
+            .form-button {
+                background-color: var(--accent-gold);
+                color: #000;
+                border: none;
+                padding: 12px 20px;
+                border-radius: 5px;
+                font-weight: bold;
+                cursor: pointer;
+                width: 100%;
+                transition: all 0.3s ease;
+            }
+
+            .form-button:hover {
+                background-color: var(--accent-gold-light);
+            }
+
+            /* Animations */
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+
+            .fade-in {
+                animation: fadeIn 0.5s ease forwards;
+            }
+
+            .delay-1 { animation-delay: 0.1s; }
+            .delay-2 { animation-delay: 0.2s; }
+            .delay-3 { animation-delay: 0.3s; }
+            .delay-4 { animation-delay: 0.4s; }
+
+            /* Responsive */
+            @media (max-width: 400px) {
+                .feature-title {
+                    font-size: 12px;
+                }
+                
+                .feature-desc {
+                    display: none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="app-container">
+            <div class="app-header">
+                <div class="logo">
+                    <i class="fas fa-coins"></i> FLUXO REAL
+                </div>
+                <div class="user-profile" onclick="toggleSection('profile')">JP</div>
+            </div>
+
+            <div class="main-content">
+                <!-- Página Inicial -->
+                <div class="page active" id="home">
+                    <!-- Saldo e Resumo -->
+                    <div class="saldo-container fade-in">
+                        <p class="saldo-label">Saldo disponível</p>
+                        <h1 class="saldo-valor" id="saldo-disponivel">R$ 4,872.50</h1>
+                        <div class="saldo-detalhes">
+                            <div class="saldo-item">
+                                <p class="saldo-item-label">Receitas</p>
+                                <p class="saldo-item-valor receita" id="total-receitas">+ R$ 6,500.00</p>
+                            </div>
+                            <div class="saldo-item">
+                                <p class="saldo-item-label">Despesas</p>
+                                <p class="saldo-item-valor despesa" id="total-despesas">- R$ 1,627.50</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Features Grid -->
+                    <div class="features-grid">
+                        <div class="feature-card fade-in delay-1" onclick="openModal('orcamento-modal')">
+                            <div class="feature-icon">
+                                <i class="fas fa-magic"></i>
+                            </div>
+                            <h3 class="feature-title">Orçamento Mágico</h3>
+                            <p class="feature-desc">Automatizado e inteligente</p>
+                        </div>
+                        <div class="feature-card fade-in delay-1" onclick="openModal('detetive-modal')">
+                            <div class="feature-icon">
+                                <i class="fas fa-search-dollar"></i>
+                            </div>
+                            <h3 class="feature-title">Detetive de Despesas</h3>
+                            <p class="feature-desc">Identifique gastos ocultos</p>
+                        </div>
+                        <div class="feature-card fade-in delay-2" onclick="openModal('desafio-modal')">
+                            <div class="feature-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <h3 class="feature-title">Desafio da Grana</h3>
+                            <p class="feature-desc">Economize e ganhe recompensas</p>
+                        </div>
+                        <div class="feature-card fade-in delay-2" onclick="openModal('guia-modal')">
+                            <div class="feature-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h3 class="feature-title">Guia Financeiro</h3>
+                            <p class="feature-desc">Aprenda em microlições</p>
+                        </div>
+                    </div>
+
+                    <!-- Análise de Fluxo -->
+                    <div class="analise-container fade-in delay-3">
+                        <div class="analise-header">
+                            <h3 class="analise-title">Análise de Fluxo</h3>
+                            <select class="analise-filter" id="analise-filter" onchange="updateChart()">
+                                <option value="semanal">Semanal</option>
+                                <option value="mensal">Mensal</option>
+                                <option value="anual">Anual</option>
+                            </select>
+                        </div>
+                        <div class="analise-chart" id="analise-chart">
+                            <!-- Gráfico será gerado pelo JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- AI Insights -->
+                    <div class="ai-insight-card fade-in delay-3" id="ai-insight">
+                        <!-- Conteúdo gerado pelo JavaScript -->
+                    </div>
+
+                    <!-- Últimas Transações -->
+                    <h3 class="transactions-title fade-in delay-4">
+                        <i class="fas fa-exchange-alt"></i> Últimas Transações
+                    </h3>
+                    <div class="transactions-list fade-in delay-4" id="transactions-list">
+                        <!-- Transações serão carregadas pelo JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Página de Relatórios -->
+                <div class="page" id="reports">
+                    <h2 style="margin-bottom: 20px; color: var(--accent-gold);">
+                        <i class="fas fa-chart-pie"></i> Relatórios Financeiros
+                    </h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Período:</label>
+                        <select class="form-input" id="report-period">
+                            <option value="30">Últimos 30 dias</option>
+                            <option value="60">Últimos 60 dias</option>
+                            <option value="90">Últimos 90 dias</option>
+                        </select>
+                    </div>
+                    
+                    <div class="report-card">
+                        <div class="report-header">
+                            <h3 class="report-title">Resumo Financeiro</h3>
+                            <span class="report-period" id="report-period-text">junho 2023</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="report-progress" style="width: 65%"></div>
+                        </div>
+                        <div class="report-summary">
+                            <div class="report-summary-item">
+                                <div class="report-summary-label">Receitas</div>
+                                <div class="report-summary-value receita" id="report-receitas">R$ 6,500.00</div>
+                            </div>
+                            <div class="report-summary-item">
+                                <div class="report-summary-label">Despesas</div>
+                                <div class="report-summary-value despesa" id="report-despesas">R$ 1,627.50</div>
+                            </div>
+                            <div class="report-summary-item">
+                                <div class="report-summary-label">Saldo</div>
+                                <div class="report-summary-value" id="report-saldo">R$ 4,872.50</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="report-card">
+                        <div class="report-header">
+                            <h3 class="report-title">Despesas por Categoria</h3>
+                            <span class="report-period">junho 2023</span>
+                        </div>
+                        <div id="category-chart">
+                            <!-- Gráfico de categorias será gerado pelo JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Página de Metas -->
+                <div class="page" id="goals">
+                    <h2 style="margin-bottom: 20px; color: var(--accent-gold);">
+                        <i class="fas fa-bullseye"></i> Minhas Metas
+                    </h2>
+                    
+                    <button class="form-button" onclick="openModal('new-goal-modal')" style="margin-bottom: 20px;">
+                        <i class="fas fa-plus"></i> Nova Meta
+                    </button>
+                    
+                    <div class="goal-card">
+                        <div class="goal-header">
+                            <h3 class="goal-title">Reserva de Emergência</h3>
+                            <span>65%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 65%"></div>
+                        </div>
+                        <p style="font-size: 14px; margin-top: 10px;">
+                            <span id="goal-amount">R$ 6,500</span> de <span id="goal-target">R$ 10,000</span>
+                        </p>
+                    </div>
+                    
+                    <div class="goal-card">
+                        <div class="goal-header">
+                            <h3 class="goal-title">Viagem Internacional</h3>
+                            <span>30%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 30%"></div>
+                        </div>
+                        <p style="font-size: 14px; margin-top: 10px;">
+                            <span id="goal-amount">R$ 5,400</span> de <span id="goal-target">R$ 18,000</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Página de Configurações -->
+                <div class="page" id="settings">
+                    <h2 style="margin-bottom: 20px; color: var(--accent-gold);">
+                        <i class="fas fa-cog"></i> Configurações
+                    </h2>
+                    
+                    <div class="settings-item">
+                        <div>
+                            <div class="settings-item-title">Notificações</div>
+                            <div class="settings-item-desc">Receber alertas e lembretes</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="notifications-toggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="settings-item">
+                        <div>
+                            <div class="settings-item-title">Modo Escuro</div>
+                            <div class="settings-item-desc">Ativar tema escuro</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="dark-mode-toggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="settings-item">
+                        <div>
+                            <div class="settings-item-title">Conta Bancária</div>
+                            <div class="settings-item-desc">Conectar conta bancária</div>
+                        </div>
+                        <button onclick="openModal('bank-modal')" style="background-color: transparent; border: none; color: var(--accent-gold); font-size: 12px; font-weight: bold;">
+                            Conectar
+                        </button>
+                    </div>
+                    
+                    <div class="settings-item">
+                        <div>
+                            <div class="settings-item-title">Exportar Dados</div>
+                            <div class="settings-item-desc">Baixar seus dados financeiros</div>
+                        </div>
+                        <button onclick="exportData()" style="background-color: transparent; border: none; color: var(--accent-gold); font-size: 12px; font-weight: bold;">
+                            Exportar
+                        </button>
+                    </div>
+                    
+                    <button class="form-button" onclick="logout()" style="margin-top: 20px; background-color: var(--danger);">
+                        <i class="fas fa-sign-out-alt"></i> Sair
+                    </button>
+                </div>
+                
+                <!-- Página de Perfil -->
+                <div class="page" id="profile">
+                    <h2 style="margin-bottom: 20px; color: var(--accent-gold);">
+                        <i class="fas fa-user"></i> Meu Perfil
+                    </h2>
+                    
+                    <div class="user-profile-large" style="width: 80px; height: 80px; margin: 0 auto 20px; font-size: 32px;">
+                        JP
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Nome</label>
+                        <input type="text" class="form-input" id="profile-name" value="João Pereira">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">E-mail</label>
+                        <input type="email" class="form-input" id="profile-email" value="joao@email.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Moeda</label>
+                        <select class="form-input" id="profile-currency">
+                            <option value="BRL" selected>Real Brasileiro (R$)</option>
+                            <option value="USD">Dólar Americano ($)</option>
+                            <option value="EUR">Euro (€)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Nova Senha</label>
+                        <input type="password" class="form-input" id="profile-password" placeholder="Deixe em branco para não alterar">
+                    </div>
+                    
+                    <button class="form-button" onclick="saveProfile()">
+                        <i class="fas fa-save"></i> Salvar Alterações
+                    </button>
+                </div>
+            </div>
+
+            <!-- Bottom Navigation -->
+            <div class="app-navigation">
+                <a href="#" class="nav-item active" onclick="toggleSection('home')">
+                    <i class="fas fa-home"></i>
+                    <span>Início</span>
+                </a>
+                <a href="#" class="nav-item" onclick="toggleSection('reports')">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Relatórios</span>
+                </a>
+                <a href="#" class="nav-item" onclick="toggleSection('goals')">
+                    <i class="fas fa-bullseye"></i>
+                    <span>Metas</span>
+                </a>
+                <a href="#" class="nav-item" onclick="toggleSection('settings')">
+                    <i class="fas fa-cog"></i>
+                    <span>Config</span>
+                </a>
+            </div>
+
+            <!-- Modals -->
+            <div class="modal-overlay" id="orcamento-modal">
+                <div class="modal-content">
+                    <span class="modal-close" onclick="closeModal('orcamento-modal')">&times;</span>
+                    <h2 class="modal-title">Orçamento Mágico</h2>
+                    <p>Seu orçamento automático foi ajustado com base no seu histórico:</p>
+                    <div style="margin: 20px 0;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span>Alimentação: </span>
+                            <span>R$ 850,00/mês</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span>Transporte: </span>
+                            <span>R$ 350,00/mês</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span>Moradia: </span>
+                            <span>R$ 2.200,00/mês</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span>Lazer: </span>
+                            <span>R$ 300,00/mês</span>
+                        </div>
+                    </div>
+                    <p style="font-size: 14px; color: var(--text-secondary);">Sugestão: Vamos reduzir 10% nas categorias flexíveis este mês?</p>
+                    <button onclick="adjustBudget()" style="background-color: var(--accent-gold); color: #000; border: none; padding: 10px 15px; border-radius: 5px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 10px;">
+                        Aplicar Sugestão
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-overlay" id="detetive-modal">
+                <div class="modal-content">
+                    <span class="modal-close" onclick="closeModal('detetive-modal')">&times;</span>
+                    <h2 class="modal-title">Detetive de Despesas</h2>
+                    <p>🔍 Encontrei oportunidades de economia:</p>
+                    <div style="margin: 15px 0; background-color: rgba(255, 56, 96, 0.1); padding: 15px; border-radius: 8px;">
+                        <h4 style="color: var(--danger); margin-bottom: 10px;">Assinaturas não utilizadas</h4>
+                        <p>Você tem 3 assinaturas com baixo uso nos últimos 2 meses:</p>
+                        <ul style="margin: 10px 0 10px 20px; font-size: 14px;">
+                            <li>Streaming Music (R$ 19,90/mês)</li>
+                            <li>App de Fitness (R$ 29,90/mês)</li>
+                            <li>Armazenamento Cloud (R$ 14,90/mês)</li>
+                        </ul>
+                        <p>Economia potencial: <strong>R$ 64,70/mês</strong></p>
+                    </div>
+                    <button onclick="cancelSubscriptions()" style="background-color: var(--accent-gold); color: #000; border: none; padding: 10px 15px; border-radius: 5px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 10px;">
+                        Quero cancelar essas assinaturas
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-overlay" id="desafio-modal">
+                <div class="modal-content">
+                    <span class="modal-close" onclick="closeModal('desafio-modal')">&times;</span>
+                    <h2 class="modal-title">Desafio da Grana</h2>
+                    <p style="text-align: center; margin-bottom: 20px;">
+                        <span style="font-size: 48px; color: var(--accent-gold);">🌟</span><br>
+                        Complete desafios e ganhe pontos!
+                    </p>
+                    <div style="background-color: rgba(46, 204, 113, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <h4>Desafio Atual: Semana do Café Caseiro</h4>
+                        <p>⏳ 3 dias restantes | 🏆 150 pontos</p>
+                        <p style="margin: 5px 0; font-size: 14px;">Economize R$ 8,00 por dia fazendo café em casa.</p>
+                        <div style="display: flex; align-items: center; margin-top: 10px;">
+                            <div style="flex: 1; height: 5px; background-color: #333; border-radius: 3px;">
+                                <div style="width: 65%; height: 100%; background-color: var(--success); border-radius: 3px;"></div>
+                            </div>
+                            <span style="margin-left: 10px; font-size: 12px;">4/7 dias completos</span>
+                        </div>
+                    </div>
+                    <div style="background-color: var(--primary-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <h4>Próximo Nível: Economista Bronze</h4>
+                        <p>📍 85/200 pontos</p>
+                        <div style="margin-top: 5px;">
+                            <div style="width: 100%; height: 3px; background-color: #333; border-radius: 3px;">
+                                <div style="width: 42.5%; height: 100%; background-color: var(--accent-gold); border-radius: 3px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="viewAllChallenges()" style="background-color: var(--accent-gold); color: #000; border: none; padding: 10px 15px; border-radius: 5px; width: 100%; font-weight: bold; cursor: pointer;">
+                        Ver todos os desafios
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-overlay" id="guia-modal">
+                <div class="modal-content">
+                    <span class="modal-close" onclick="closeModal('guia-modal')">&times;</span>
+                    <h2 class="modal-title">Guia Financeiro</h2>
+                    <div style="text-align: center; margin: 20px 0;">
+                        <span style="font-size: 40px; color: var(--accent-gold);">📚</span>
+                        <h3 style="margin: 10px 0;">Microlição #24</h3>
+                        <p style="font-size: 18px; color: var(--accent-gold-light);">"O Poder dos Centavos"</p>
+                    </div>
+                    <p style="margin-bottom: 15px;">Economizar pequenas quantias regularmente pode ter um grande impacto no longo prazo devido aos juros compostos.</p>
+                    <div style="background-color: rgba(212, 175, 55, 0.1); padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <h4 style="color: var(--accent-gold); margin-bottom: 10px;">Experimento do Café</h4>
+                        <p>Se você deixar de gastar R$ 8,00 por dia com café e investir esse valor:</p>
+                        <ul style="margin: 10px 0 10px 20px; font-size: 14px;">
+                            <li>1 ano: R$ 2.920,00</li>
+                            <li>5 anos: R$ 14.600,00 + juros</li>
+                            <li>10 anos: R$ 29.200,00 + juros</li>
+                        </ul>
+                    </div>
+                    <button onclick="nextLesson()" style="background-color: transparent; color: var(--accent-gold); border: 1px solid var(--accent-gold); padding: 10px 15px; border-radius: 5px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 10px;">
+                        Próxima Lição
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-overlay" id="new-goal-modal">
+                <div class="modal-content">
+                    <span class="modal-close" onclick="closeModal('new-goal-modal')">&times;</span>
+                    <h2 class="modal-title">Nova Meta Financeira</h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Nome da Meta</label>
+                        <input type="text" class="form-input" id="goal-name" placeholder="Ex: Reserva emergência, Viagem...">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Valor Alvo</label>
+                        <input type="number" class="form-input" id="goal-amount" placeholder="R$ 0,00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Prazo</label>
+                        <select class="form-input" id="goal-deadline">
+                            <option value="3">3 meses</option>
+                            <option value="6" selected>6 meses</option>
+                            <option value="12">1 ano</option>
+                            <option value="24">2 anos</option>
+                            <option value="custom">Personalizado</option>
+                        </select>
+                    </div>
+                    
+                    <button onclick="createGoal()" style="background-color: var(--accent-gold); color: #000; border: none; padding: 12px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; width: 100%;">
+                        Criar Meta
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-overlay" id="bank-modal">
+                <div class="modal-content">
+                    <span class="modal-close" onclick="closeModal('bank-modal')">&times;</span>
+                    <h2 class="modal-title">Conectar Conta Bancária</h2>
+                    
+                    <p style="margin-bottom: 20px; font-size: 14px;">
+                        Conecte sua conta bancária para sincronizar automaticamente seus extratos e categorizar suas transações.
+                    </p>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Banco</label>
+                        <select class="form-input" id="bank-select">
+                            <option value="">Selecione seu banco</option>
+                            <option value="itau">Itaú</option>
+                            <option value="bradesco">Bradesco</option>
+                            <option value="santander">Santander</option>
+                            <option value="bb">Banco do Brasil</option>
+                            <option value="nubank">Nubank</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Agência</label>
+                        <input type="text" class="form-input" id="bank-agency" placeholder="Ex: 1234">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Conta</label>
+                        <input type="text" class="form-input" id="bank-account" placeholder="Ex: 123456-7">
+                    </div>
+                    
+                    <button onclick="connectBank()" style="background-color: var(--accent-gold); color: #000; border: none; padding: 12px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; width: 100%;">
+                        Conectar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Dados do usuário - pode ser substituído por dados reais de localStorage ou API
+            const userData = {
+                name: "João Pereira",
+                email: "joao@email.com",
+                currency: "R$",
+                balance: 4872.50,
+                income: 6500.00,
+                expenses: 1627.50,
+                notifications: true,
+                darkMode: true,
+                transactions: [
+                    { id: 1, type: "income", description: "Salário", amount: 4500.00, date: "2023-06-05", category: "Salário" },
+                    { id: 2, type: "expense", description: "Supermercado", amount: 287.90, date: "2023-06-03", category: "Alimentação" },
+                    { id: 3, type: "expense", description: "Roupas", amount: 459.00, date: "2023-06-01", category: "Vestuário" },
+                    { id: 4, type: "income", description: "Freelance", amount: 2000.00, date: "2023-05-28", category: "Trabalho" },
+                    { id: 5, type: "expense", description: "Restaurante", amount: 125.00, date: "2023-05-27", category: "Alimentação" }
+                ],
+                budget: {
+                    food: 850,
+                    transport: 350,
+                    housing: 2200,
+                    leisure: 300,
+                    other: 400
+                },
+                goals: [
+                    { name: "Reserva de Emergência", target: 10000, current: 6500 },
+                    { name: "Viagem Internacional", target: 18000, current: 5400 }
+                ]
+            };
+
+            // Inicialização do app
+            document.addEventListener('DOMContentLoaded', function() {
+                loadUserData();
+                updateDashboard();
+                updateTransactions();
+                updateChart();
+                updateAIInsight();
+                
+                // Configura toggles de acordo com os dados do usuário
+                document.getElementById('notifications-toggle').checked = userData.notifications;
+                document.getElementById('dark-mode-toggle').checked = userData.darkMode;
+                
+                // Inicia animações
+                setTimeout(() => {
+                    const elements = document.querySelectorAll('.fade-in');
+                    elements.forEach(el => {
+                        el.style.opacity = '1';
+                    });
+                }, 100);
+            });
+
+            // Atualiza o dashboard com os dados do usuário
+            function updateDashboard() {
+                document.getElementById('saldo-disponivel').textContent = `${userData.currency} ${userData.balance.toFixed(2).replace('.', ',')}`;
+                document.getElementById('total-receitas').textContent = `+ ${userData.currency} ${userData.income.toFixed(2).replace('.', ',')}`;
+                document.getElementById('total-despesas').textContent = `- ${userData.currency} ${userData.expenses.toFixed(2).replace('.', ',')}`;
+                
+                // Atualiza relatórios
+                document.getElementById('report-saldo').textContent = `${userData.currency} ${userData.balance.toFixed(2).replace('.', ',')}`;
+                document.getElementById('report-receitas').textContent = `${userData.currency} ${userData.income.toFixed(2).replace('.', ',')}`;
+                document.getElementById('report-despesas').textContent = `${userData.currency} ${userData.expenses.toFixed(2).replace('.', ',')}`;
+                
+                // Atualiza metas
+                if (userData.goals.length > 0) {
+                    document.getElementById('goal-amount').textContent = `${userData.currency} ${userData.goals[0].current.toFixed(2).replace('.', ',')}`;
+                    document.getElementById('goal-target').textContent = `${userData.currency} ${userData.goals[0].target.toFixed(2).replace('.', ',')}`;
+                }
+            }
+
+            // Atualiza a lista de transações
+            function updateTransactions() {
+                const transactionsList = document.getElementById('transactions-list');
+                transactionsList.innerHTML = '';
+                
+                // Ordena transações por data (mais recentes primeiro)
+                const sortedTransactions = [...userData.transactions].sort((a, b) => new Date(b.date) - new Date(a.date));
+                
+                sortedTransactions.slice(0, 5).forEach(transaction => {
+                    const transactionItem = document.createElement('div');
+                    transactionItem.className = 'transaction-item';
+                    
+                    const date = new Date(transaction.date);
+                    const formattedDate = date.toLocaleDateString('pt-BR');
+                    
+                    transactionItem.innerHTML = `
+                        <div class="transaction-info">
+                            <div class="transaction-icon ${transaction.type}">
+                                <i class="fas ${transaction.type === 'income' ? 'fa-dollar-sign' : 'fa-shopping-bag'}"></i>
+                            </div>
+                            <div class="transaction-details">
+                                <h4>${transaction.description}</h4>
+                                <p>${formattedDate} - ${transaction.category}</p>
+                            </div>
+                        </div>
+                        <div class="transaction-value ${transaction.type}">
+                            ${transaction.type === 'income' ? '+' : '-'} ${userData.currency} ${transaction.amount.toFixed(2).replace('.', ',')}
+                        </div>
+                    `;
+                    
+                    transactionsList.appendChild(transactionItem);
+                });
+            }
+
+            // Atualiza o gráfico de análise
+            function updateChart() {
+                const chartContainer = document.getElementById('analise-chart');
+                const period = document.getElementById('analise-filter').value;
+                chartContainer.innerHTML = '';
+                
+                // Dados fictícios para demonstração
+                const days = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
+                const incomeData = [70, 40, 80, 30, 60, 90, 20];
+                const expenseData = [40, 50, 30, 70, 45, 30, 80];
+                
+                if (period === 'mensal') {
+                    // Configuração mensal
+                    for (let i = 1; i <= 4; i++) {
+                        const incomePercentage = Math.floor(Math.random() * 80) + 20;
+                        const expensePercentage = Math.floor(Math.random() * 80) + 10;
+                        
+                        const weekDiv = document.createElement('div');
+                        weekDiv.style.flex = '1';
+                        weekDiv.style.display = 'flex';
+                        weekDiv.style.flexDirection = 'column';
+                        
+                        const incomeBar = document.createElement('div');
+                        incomeBar.className = 'analise-bar receita';
+                        incomeBar.style.height = `${incomePercentage}%`;
+                        
+                        const expenseBar = document.createElement('div');
+                        expenseBar.className = 'analise-bar despesa';
+                        expenseBar.style.height = `${expensePercentage}%`;
+                        expenseBar.style.marginTop = '5px';
+                        
+                        const label = document.createElement('div');
+                        label.className = 'analise-label';
+                        label.textContent = `Sem ${i}`;
+                        
+                        weekDiv.appendChild(incomeBar);
+                        weekDiv.appendChild(expenseBar);
+                        weekDiv.appendChild(label);
+                        chartContainer.appendChild(weekDiv);
+                    }
+                } else if (period === 'anual') {
+                    // Configuração anual
+                    const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+                    
+                    for (let i = 0; i < 6; i++) {
+                        const incomePercentage = Math.floor(Math.random() * 80) + 20;
+                        const expensePercentage = Math.floor(Math.random() * 80) + 10;
+                        
+                        const monthDiv = document.createElement('div');
+                        monthDiv.style.flex = '1';
+                        monthDiv.style.display = 'flex';
+                        monthDiv.style.flexDirection = 'column';
+                        
+                        const incomeBar = document.createElement('div');
+                        incomeBar.className = 'analise-bar receita';
+                        incomeBar.style.height = `${incomePercentage}%`;
+                        
+                        const expenseBar = document.createElement('div');
+                        expenseBar.className = 'analise-bar despesa';
+                        expenseBar.style.height = `${expensePercentage}%`;
+                        expenseBar.style.marginTop = '5px';
+                        
+                        const label = document.createElement('div');
+                        label.className = 'analise-label';
+                        label.textContent = months[i];
+                        
+                        monthDiv.appendChild(incomeBar);
+                        monthDiv.appendChild(expenseBar);
+                        monthDiv.appendChild(label);
+                        chartContainer.appendChild(monthDiv);
+                    }
+                } else {
+                    // Configuração semanal padrão
+                    days.forEach((day, index) => {
+                        const dayDiv = document.createElement('div');
+                        dayDiv.style.flex = '1';
+                        dayDiv.style.display = 'flex';
+                        dayDiv.style.flexDirection = 'column';
+                        
+                        const incomeBar = document.createElement('div');
+                        incomeBar.className = 'analise-bar receita';
+                        incomeBar.style.height = `${incomeData[index]}%`;
+                        
+                        const expenseBar = document.createElement('div');
+                        expenseBar.className = 'analise-bar despesa';
+                        expenseBar.style.height = `${expenseData[index]}%`;
+                        expenseBar.style.marginTop = '5px';
+                        
+                        const label = document.createElement('div');
+                        label.className = 'analise-label';
+                        label.textContent = day;
+                        
+                        dayDiv.appendChild(incomeBar);
+                        dayDiv.appendChild(expenseBar);
+                        dayDiv.appendChild(label);
+                        chartContainer.appendChild(dayDiv);
+                    });
+                }
+            }
+
+            // Atualiza o insight da IA
+            function updateAIInsight() {
+                const aiInsight = document.getElementById('ai-insight');
+                
+                // Análise de gastos com base nos dados
+                const foodExpenses = userData.transactions
+                    .filter(t => t.category === 'Alimentação' && t.type === 'expense')
+                    .reduce((sum, t) => sum + t.amount, 0);
+                
+                const subscriptions = [
+                    { name: "Streaming Music", amount: 19.90 },
+                    { name: "App de Fitness", amount: 29.90 },
+                    { name: "Armazenamento Cloud", amount: 14.90 }
+                ];
+                
+                const totalSubscriptions = subscriptions.reduce((sum, sub) => sum + sub.amount, 0);
+                
+                aiInsight.innerHTML = `
+                    <div class="ai-insight-header">
+                        <div class="ai-insight-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3 class="ai-insight-title">Insight do Detetive Financeiro</h3>
+                    </div>
+                    <p class="ai-insight-text">
+                        Analisando seus gastos, identifiquei que ${foodExpenses > 500 ? 
+                            `você está gastando muito (R$ ${foodExpenses.toFixed(2)}) com alimentação.` : 
+                            'seus gastos com alimentação estão dentro da média.'}
+                        ${totalSubscriptions > 0 ? 
+                            `Você também tem ${subscriptions.length} assinaturas que totalizam R$ ${totalSubscriptions.toFixed(2)} por mês.` : 
+                            'Você não tem assinaturas recorrentes identificadas.'}
+                    </p>
+                    <p class="ai-insight-suggestion">
+                        ${foodExpenses > 500 ? 
+                            'Sugiro planejar suas refeições semanais para reduzir gastos com delivery.' : 
+                            'Continue com seus bons hábitos alimentares!'}
+                        ${totalSubscriptions > 0 ? 
+                            ' Avalie quais assinaturas você realmente utiliza para possíveis cancelamentos.' : 
+                            ''}
+                    </p>
+                `;
+            }
+
+            // Navegação entre seções
+            function toggleSection(sectionId) {
+                // Esconde todas as seções
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Mostra a seção selecionada
+                document.getElementById(sectionId).classList.add('active');
+                
+                // Atualiza a navegação ativa
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Ativa o item correspondente no menu
+                const navItems = document.querySelectorAll('.nav-item');
+                switch(sectionId) {
+                    case 'home':
+                        navItems[0].classList.add('active');
+                        break;
+                    case 'reports':
+                        navItems[1].classList.add('active');
+                        break;
+                    case 'goals':
+                        navItems[2].classList.add('active');
+                        break;
+                    case 'settings':
+                    case 'profile':
+                        navItems[3].classList.add('active');
+                        break;
+                }
+                
+                // Atualiza o conteúdo específico da seção
+                if (sectionId === 'reports') {
+                    updateChart();
+                }
+            }
+
+            // Funções para os modais
+            function openModal(modalId) {
+                document.getElementById(modalId).classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal(modalId) {
+                document.getElementById(modalId).classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+
+            // Fecha o modal quando clica fora
+            window.addEventListener('click', function(event) {
+                document.querySelectorAll('.modal-overlay').forEach(modal => {
+                    if (event.target === modal) {
+                        closeModal(modal.id);
+                    }
+                });
+            });
+
+            // Funções específicas para ações
+            function adjustBudget() {
+                // Reduz o orçamento em 10% nas categorias flexíveis
+                userData.budget.food = Math.round(userData.budget.food * 0.9);
+                userData.budget.leisure = Math.round(userData.budget.leisure * 0.9);
+                userData.budget.other = Math.round(userData.budget.other * 0.9);
+                
+                alert('Orçamento ajustado com sucesso! Suas categorias flexíveis foram reduzidas em 10%.');
+                closeModal('orcamento-modal');
+            }
+
+            function cancelSubscriptions() {
+                // Simula o cancelamento das assinaturas
+                const savings = 64.70;
+                userData.expenses -= savings;
+                userData.balance += savings;
+                
+                updateDashboard();
+                alert(`Assinaturas canceladas! Você economizará R$ ${savings.toFixed(2)} por mês.`);
+                closeModal('detetive-modal');
+            }
+
+            function viewAllChallenges() {
+                alert('Você será redirecionado para a página completa de desafios!');
+                closeModal('desafio-modal');
+            }
+
+            function nextLesson() {
+                alert('Carregando próxima lição...');
+                closeModal('guia-modal');
+            }
+
+            function createGoal() {
+                const name = document.getElementById('goal-name').value;
+                const amount = parseFloat(document.getElementById('goal-amount').value);
+                const deadline = document.getElementById('goal-deadline').value;
+                
+                if (!name || !amount) {
+                    alert('Por favor, preencha todos os campos obrigatórios.');
+                    return;
+                }
+                
+                // Adiciona a nova meta
+                userData.goals.push({
+                    name,
+                    target: amount,
+                    current: 0,
+                    deadline
+                });
+                
+                alert(`Meta "${name}" criada com sucesso!`);
+                closeModal('new-goal-modal');
+                
+                // Atualiza a exibição se estiver na página de metas
+                if (document.getElementById('goals').classList.contains('active')) {
+                    toggleSection('goals');
+                }
+            }
+
+            function connectBank() {
+                const bank = document.getElementById('bank-select').value;
+                const agency = document.getElementById('bank-agency').value;
+                const account = document.getElementById('bank-account').value;
+                
+                if (!bank || !agency || !account) {
+                    alert('Por favor, preencha todos os campos para conectar sua conta bancária.');
+                    return;
+                }
+                
+                alert(`Conta do banco ${bank} conectada com sucesso! Os dados serão sincronizados em breve.`);
+                closeModal('bank-modal');
+            }
+
+            function exportData() {
+                alert('Preparando arquivo com seus dados financeiros para download...');
+                // Em uma implementação real, geraria um arquivo JSON ou CSV
+            }
+
+            function logout() {
+                if (confirm('Tem certeza que deseja sair do Fluxo Real?')) {
+                    alert('Você foi desconectado. Redirecionando para a página inicial...');
+                    // Em uma implementação real, limparia os dados de sessão
+                }
+            }
+
+            function saveProfile() {
+                userData.name = document.getElementById('profile-name').value;
+                userData.email = document.getElementById('profile-email').value;
+                userData.currency = document.getElementById('profile-currency').value;
+                
+                const newPassword = document.getElementById('profile-password').value;
+                if (newPassword) {
+                    alert('Senha alterada com sucesso!');
+                }
+                
+                alert('Perfil atualizado com sucesso!');
+                toggleSection('home');
+            }
+
+            // Carrega dados do usuário (simulando localStorage)
+            function loadUserData() {
+                const savedData = localStorage.getItem('fluxoRealUserData');
+                if (savedData) {
+                    Object.assign(userData, JSON.parse(savedData));
+                }
+                
+                // Atualiza campos do perfil
+                document.getElementById('profile-name').value = userData.name;
+                document.getElementById('profile-email').value = userData.email;
+                document.getElementById('profile-currency').value = userData.currency;
+            }
+
+            // Salva dados do usuário (simulando localStorage)
+            function saveUserData() {
+                localStorage.setItem('fluxoRealUserData', JSON.stringify(userData));
+            }
+
+            // Configura listeners para os toggles
+            document.getElementById('notifications-toggle').addEventListener('change', function() {
+                userData.notifications = this.checked;
+                saveUserData();
+            });
+
+            document.getElementById('dark-mode-toggle').addEventListener('change', function() {
+                userData.darkMode = this.checked;
+                saveUserData();
+                alert('O tema será aplicado após recarregar a página.');
+            });
+        </script>
+    </body>
+</html>
